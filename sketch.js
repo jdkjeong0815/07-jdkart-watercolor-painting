@@ -228,9 +228,6 @@ function drawGradientBackground() {
 }
 
 function drawFrame() {
-  dep = minCanvasSize / 30; // 바깥쪽 프레임 크기를 width, height 중 작은 것 기준으로 1/30로 설정
-  innerDep = dep * 2; // 안쪽 프레임 크기를 바깥쪽 프레임의 2배로 설정
-
   // 액자 프레임 색상 설정 (검은색)
   mainLayer.noStroke();
 
