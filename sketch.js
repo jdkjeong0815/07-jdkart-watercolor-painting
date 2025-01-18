@@ -45,8 +45,15 @@ function setup() {
   frameRate(60); // 프레임 레이트 설정
   noScroll(); // 스크롤 금지. 스크롤바 생기는 것 방지
 
-  dep = minCanvasSize / 30; // 바깥쪽 프레임 크기를 width, height 중 작은 것 기준으로 1/30로 설정
-  innerDep = dep * 2; // 안쪽 프레임 크기를 바깥쪽 프레임의 2배로 설정
+  console.log("minCanvasSize: ", minCanvasSize);
+  // 바깥쪽 프레임 크기를 width, height 중 작은 것 기준으로 1/20, 1/30로 설정
+  if (minCanvasSize > 1200) {
+    dep = (minCanvasSize/30); // PC, TV 등 큰 모니터 
+    innerDep = dep * 2; // 안쪽 프레임 크기를 바깥쪽 프레임의 4배로 설정
+  } else {
+    dep = (minCanvasSize/20); // 모바일, 태블릿 등 작은 모니터
+    innerDep = dep * 2; // 안쪽 프레임 크기를 바깥쪽 프레임의 2배로 설정
+  }
 
   // 랜덤 요소 초기화
   clear();
