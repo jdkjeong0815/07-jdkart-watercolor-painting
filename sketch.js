@@ -1,4 +1,6 @@
 // Title : 07-jdkart-watercolor-painting
+// 라이브러리 : 1) full screen & reload 2) no scroll 3) responsive UI 4) save image 5) 작가명, 작품명, 설명 - 폰트
+// 프로그램 특징 : 레이어 사용(createGraphics), 애니메이션과 배경을 다른 레이어로 분리하여 처리. 반응형 UI, 액자 모드 기능
 //2025-Jan-18
 //    1) 제목: 구상과 비구상의 조합!
 //    2) 설명: 백색, 검은색을 기본 색상으로 하고, 눈송이가 떨어지는 애니메이션 효과를 추가한 작품입니다.
