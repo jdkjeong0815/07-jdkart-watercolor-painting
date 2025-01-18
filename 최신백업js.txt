@@ -1,19 +1,11 @@
-// Title : 07-jdkart-watercolor-painting
+// jdk
 //2025-Jan-18
-//    1) 제목: 구상과 비구상의 조합!
-//    2) 설명: 백색, 검은색을 기본 색상으로 하고, 눈송이가 떨어지는 애니메이션 효과를 추가한 작품입니다.
-//       - 나무는 분위기를 맞는 나무 종류로 제한. 직선적이고 곧은 나무, 얇은 두께의 나무를 선택께
-//       - 배경 색상은 2개의 랜덤 색상을 lerpColor() 함수를 사용하여 그라디언트로 적용
-//       - 달은 주황색과 노란색 그라디언트로 그리고, 안개 효과를 추가
-//       - 랜덤 요소: 배경색1, 배경색2, 나무 위치, 달 크기, 달 위치, 눈송이 크기
-// 2025-Jan-18 revised by jdk
-//    1) full scrren touch event 추가 : 모바일, 태블릿 웹브라우저 실행시 자동 전체 화면 실행이 보안상 안되므로 터치 동작을 추가. 
-//       - 한번 터치하면 full screen으로 전환. 2초 후에 리로드 기능 수행(전체 화면 채우기 위해). - setTimeout() 함수 사용
-//       - 안드로이드는 전체 화면 됨. 아이패드는 위, 아래 컨트롤 바가 생김. 나갈때는 운영체제 제공하는 방법으로 나가야 함.
-//    2) 반응형 UI 도입 : 스마트폰, 태블릿, PC, LED 캔버스 등 다양한 화면 크기에 대응.
-//    3) 프레임 구성은 3단계 : 바깥쪽 프레임, 안쪽 프레임, 프레임의 입체감을 위한 얇은 프레임(안쪽과 바깥쪽 사이)
-//    4) 눈송이 생성 확률을 0.1에서 0.04로 줄여 정적인 느낌과 동적인 느낌을 조화롭게 함.
-//    5) 기타 기능 : 저장 기능(s/S), 윈도우 리사이즈, 노스크롤 기능
+// 제목: 구상과 비구상의 경계
+// 설명: 백색, 검은색을 기본 색상으로 하고, 눈송이가 떨어지는 애니메이션 효과를 추가한 작품입니다.
+// 나무는 분위기를 맞는 나무 종류로 제한. 직선적이고 곧은 나무, 얇은 두께의 나무를 선택께
+// 배경 색상은 2개의 랜덤 색상을 lerpColor() 함수를 사용하여 그라디언트로 적용
+// 달은 주황색과 노란색 그라디언트로 그리고, 안개 효과를 추가
+// 랜덤 요소: 배경색1, 배경색2, 나무 위치, 달 크기, 달 위치, 눈송이 크기
 
 
 let imgs = []
@@ -57,23 +49,21 @@ function setup() {
   frameRate(60); // 프레임 레이트 설정
   noScroll(); // 스크롤 금지. 스크롤바 생기는 것 방지
 
-  //console.log("minCanvasSize: ", minCanvasSize);
+  console.log("minCanvasSize: ", minCanvasSize);
   // 바깥쪽 프레임 크기를 width, height 중 작은 것 기준으로 1/20, 1/30로 설정
   if (minCanvasSize > 1200) {
-    dep = (minCanvasSize/30); // PC, TV 등 큰 모니터 : 프레임을 크게 설정
-    innerDep = dep * 2; // 안쪽 프레임 크기를 바깥쪽 프레임의 2배로 설정
+    dep = (minCanvasSize/30); // PC, TV 등 큰 모니터 
+    innerDep = dep * 2; // 안쪽 프레임 크기를 바깥쪽 프레임의 4배로 설정
   } else {
-    dep = (minCanvasSize/20); // 모바일, 태블릿 등 작은 모니터 : 프레임을 작게 설정
+    dep = (minCanvasSize/20); // 모바일, 태블릿 등 작은 모니터
     innerDep = dep * 2; // 안쪽 프레임 크기를 바깥쪽 프레임의 2배로 설정
   }
-
-  // 정방형 LED 캔버스 : 프레임 두께는 최대한 작게!
   if (width == height) {
     dep = (minCanvasSize/180); // 정방형 LED 캔버스
     //dep = 0;
     innerDep = dep * 2; // 안쪽 프레임 크기를 바깥쪽 프레임의 2배로 설정
   }
-  //console.log("dep: ", dep, "innerDep: ", innerDep);
+  console.log("dep: ", dep, "innerDep: ", innerDep);
 
   // 랜덤 요소 초기화
   clear();
@@ -106,14 +96,12 @@ function initializeRandomElements() {
   randomElements.backgroundColor1 = color(random(255), random(255), random(255));
   randomElements.backgroundColor2 = color(random(255), random(255), random(255));
   randomElements.moonColor = random(104, 204);
-
-  // 나무 색상을 랜덤하게 설정
-  //randomElements.treeColor = random([color(0, 0, 0), color(255, 255, 255)]);
-    if (random(1) < 0.55) {  // 나무 색상을 검은색으로 설정할 확률을 55%로 설정
+  if (random(1) < 0.5) {
     randomElements.treeColor = color(0, 0, 0);
   } else {
     randomElements.treeColor = color(255, 255, 255);
   }
+  //randomElements.treeColor = random([color(0, 0, 0), color(255, 255, 255)]);
   randomElements.moonSize = random(minCanvasSize/28, minCanvasSize/28*1.5);  // 달의 크기를 min 캔버스 기준으로 1/28 ~ 1/28*1.5 사이로 설정
   randomElements.moonX = random(randomElements.moonSize + dep + innerDep, width - 30 - dep - innerDep);
   randomElements.moonY = random(dep + innerDep + randomElements.moonSize * 1.5, dep + innerDep + randomElements.moonSize * 3.5);
@@ -175,7 +163,7 @@ function drawGradientMoon() {
   }
 
   // 안개 효과 추가
-  mainLayer.drawingContext.filter = 'blur(15px)';
+  mainLayer.drawingContext.filter = 'blur(15px)';  // 15px의 흐림 효과
   let fogSize = floor(random(10, 20));
   for (let i = 0; i < fogSize; i++) {
     let fogColor = color(255, 255, 255, 20);
@@ -226,9 +214,6 @@ function drawGradientBackground() {
 }
 
 function drawFrame() {
-  dep = minCanvasSize / 30; // 바깥쪽 프레임 크기를 width, height 중 작은 것 기준으로 1/30로 설정
-  innerDep = dep * 2; // 안쪽 프레임 크기를 바깥쪽 프레임의 2배로 설정
-
   // 액자 프레임 색상 설정 (검은색)
   mainLayer.noStroke();
 
@@ -272,7 +257,7 @@ function drawFrame() {
 
   // 2) 안쪽 프레임 그라디언트
   for (let i = 0; i < innerDep; i++) {
-    let inter = map(i, 0, innerDep, 255, 255); // 흰색으로 통일 (255, 255)
+    let inter = map(i, 0, innerDep, 255, 255); // 밝은 회색에서 어두운 회색으로 그라디언트
     mainLayer.fill(inter);
 
     // 위쪽 테두리
@@ -309,7 +294,7 @@ function drawFrame() {
   }
 
   // 3) 프레임의 입체감을 위해 밝은 색상 추가 (바깥 프레임과 안쪽 프레임 사이)
-  mainLayer.fill(200); // 밝은 회색으로 설정
+  mainLayer.fill(240); // 밝은 회색으로 설정  200
   let brightPartWidth = dep * 0.05; // 밝은 부분의 폭을 결정하는 변수 0.1
 
   // 위쪽 테두리의 밝은 부분
@@ -347,7 +332,7 @@ function drawFrame() {
 
 function drawSnowflakes() {
   // 새로운 눈송이 추가
-  if (random(1) < 0.04) { // 확률을 0.1에서 0.04로 줄여 눈송이 생성 빈도를 낮춤
+  if (random(1) < 0.04) { // 확률을 0.1에서 0.05로 줄여 눈송이 생성 빈도를 낮춤
     snowflakes.push(new Snowflake());
   }
   //console.log("snowflake: ", snowflakes.length);
@@ -403,7 +388,7 @@ function clearSnowflakes() {
 
 function keyPressed() {
   if (key === 's' || key === 'S') {
-    saveCanvas('WaterColorPainting', 'png'); // 캔버스를 'WaterColorPainting.png'로 저장
+    saveCanvas('myCanvas', 'png'); // 캔버스를 'myCanvas.png'로 저장
   }
 }
 
