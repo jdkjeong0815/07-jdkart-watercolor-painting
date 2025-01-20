@@ -1,23 +1,31 @@
-// Title : 07-jdkart-watercolor-painting
-// 라이브러리 : 1) full screen & reload 2) no scroll 3) responsive UI 4) save image 5) 작가명, 작품명, 설명 - 폰트
-// 프로그램 특징 : 레이어 사용(createGraphics), 애니메이션과 배경을 다른 레이어로 분리하여 처리. 반응형 UI, 액자 모드 기능
-//2025-Jan-18
-//    1) 제목: 구상과 비구상의 조합!
-//    2) 설명: 백색, 검은색을 기본 색상으로 하고, 눈송이가 떨어지는 애니메이션 효과를 추가한 작품입니다.
-//       - 나무는 분위기를 맞는 나무 종류로 제한. 직선적이고 곧은 나무, 얇은 두께의 나무를 선택께
-//       - 배경 색상은 2개의 랜덤 색상을 lerpColor() 함수를 사용하여 그라디언트로 적용
-//       - 달은 주황색과 노란색 그라디언트로 그리고, 안개 효과를 추가
-//       - 랜덤 요소: 배경색1, 배경색2, 나무 위치, 달 크기, 달 위치, 눈송이 크기
-// 2025-Jan-18 revised by jdk
-//    1) full scrren touch event 추가 : 모바일, 태블릿 웹브라우저 실행시 자동 전체 화면 실행이 보안상 안되므로 터치 동작을 추가. 
+// =============================================================================
+// 프로그램 : 07-jdkart-watercolor-painting
+// Created : 
+// 작가 : jdk                    Inspiration : 
+// Github : https://github.com/jdkjeong0815/07-jdkart-watercolor-painting
+// Web : https://jdkjeong0815.github.io/07-jdkart-watercolor-painting/
+// 작품 설명 : 구상과 비구상의 조합!
+//   - 백색, 검은색을 기본 색상으로 하고, 눈송이가 떨어지는 애니메이션 효과를 추가한 작품!
+//   - 나무는 분위기를 맞는 나무 종류로 제한. 직선적이고 곧은 나무, 얇은 두께의 나무를 선택께
+//   - 배경 색상은 2개의 랜덤 색상을 lerpColor() 함수를 사용하여 그라디언트로 적용
+//   - 달은 주황색과 노란색 그라디언트로 그리고, 안개 효과를 추가
+//   - 랜덤 요소: 배경색1, 배경색2, 나무 위치, 달 크기, 달 위치, 눈송이 크기
+// 라이브러리 기능 : jdklib.js / 
+//   - 1) full screen & reload 2) no scroll 3) responsive UI 4) save image 5) 작가명, 작품명, 설명 - 폰트
+//   - 2) 프로그램 특징 : 레이어 사용(createGraphics), 애니메이션과 배경을 다른 레이어로 분리하여 처리. 반응형 UI, 액자 모드 기능
+// 주기적인 리로드 : 매  ??초
+// Last Update : 
+// 2025-Jan-18 요약
+//  - 1) full scrren touch event 추가 : 모바일, 태블릿 웹브라우저 실행시 자동 전체 화면 실행이 보안상 안되므로 터치 동작을 추가. 
 //       - 한번 터치하면 full screen으로 전환. 2초 후에 리로드 기능 수행(전체 화면 채우기 위해). - setTimeout() 함수 사용
 //       - 안드로이드는 전체 화면 됨. 아이패드는 위, 아래 컨트롤 바가 생김. 나갈때는 운영체제 제공하는 방법으로 나가야 함.
 //    2) 반응형 UI 도입 : 스마트폰, 태블릿, PC, LED 캔버스 등 다양한 화면 크기에 대응.
 //    3) 프레임 구성은 3단계 : 바깥쪽 프레임, 안쪽 프레임, 프레임의 입체감을 위한 얇은 프레임(안쪽과 바깥쪽 사이)
 //    4) 눈송이 생성 확률을 0.1에서 0.04로 줄여 정적인 느낌과 동적인 느낌을 조화롭게 함.
 //    5) 기타 기능 : 저장 기능(s/S), 윈도우 리사이즈, 노스크롤 기능
+// =============================================================================
 
-
+let saveFileName = "07-jdkart-watercolor-painting"; // 저장 파일명
 let imgs = []
 let img;
 
@@ -47,7 +55,7 @@ function touchStarted() {
 }
 
 function setup() {
-  
+  noScroll();
   let canvas = createCanvas(windowWidth, windowHeight);
 
   // 레이어 생성
@@ -398,19 +406,4 @@ function refreshSketch() {
 function clearSnowflakes() {
   // 눈송이 배열 초기화
   snowflakes = [];
-}
-
-function keyPressed() {
-  if (key === 's' || key === 'S') {
-    saveCanvas('WaterColorPainting', 'png'); // 캔버스를 'WaterColorPainting.png'로 저장
-  }
-}
-
-function windowResized() {
-  resizeCanvas(windowWidth, windowHeight);
-  redraw();
-}
-
-function noScroll() {
-  document.body.style.overflow = 'hidden';
 }
