@@ -95,7 +95,7 @@ function setup() {
   drawFrame();
   
   // 120초마다 자동 갱신
-  setInterval(refreshSketch, 120000);  // 애니메이션 효과를 위해 120초로 변경
+  setInterval(refreshSketch, 3000);  // 애니메이션 효과를 위해 120초로 변경
 }
 
 function draw() {
@@ -198,7 +198,7 @@ function drawGradientMoon() {
 }
 
 function drawGradientBackground() {
-  let direction = random([0, 1, 2, 3]); // 0: top-bottom, 1: bottom-top, 2: left-right, 3: right-left
+  let direction = random([0, 1, 2, 3, 4]); // 0: top-bottom, 1: bottom-top, 2: left-right, 3: right-left, 4: random angle
   let c1 = color(random(255), random(255), random(255));
   let c2 = color(random(255), random(255), random(255));
 
@@ -221,8 +221,15 @@ function drawGradientBackground() {
     gradient = ctx.createLinearGradient(xStart, 0, xEnd, 0);
   } else if (direction === 3) { // Right to Left
     gradient = ctx.createLinearGradient(xEnd, 0, xStart, 0);
+  } else if (direction === 4) { // Random angle
+    let angle = random(TWO_PI);
+    let x1 = xStart + cos(angle) * (xEnd - xStart);
+    let y1 = yStart + sin(angle) * (yEnd - yStart);
+    gradient = ctx.createLinearGradient(xStart, yStart, x1, y1);
   }
 
+  console.log("direction: ", direction);
+  
   // Add color stops
   gradient.addColorStop(0, c1.toString());
   gradient.addColorStop(1, c2.toString());
