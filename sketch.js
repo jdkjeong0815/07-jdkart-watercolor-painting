@@ -95,7 +95,7 @@ function setup() {
   drawFrame();
   
   // 120초마다 자동 갱신
-  setInterval(refreshSketch, 3000);  // 애니메이션 효과를 위해 120초로 변경
+  setInterval(refreshSketch, 120000);  // 애니메이션 효과를 위해 120초로 변경
 }
 
 function draw() {
@@ -229,7 +229,7 @@ function drawGradientBackground() {
   }
 
   console.log("direction: ", direction);
-  
+
   // Add color stops
   gradient.addColorStop(0, c1.toString());
   gradient.addColorStop(1, c2.toString());
