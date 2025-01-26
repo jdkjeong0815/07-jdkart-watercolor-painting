@@ -48,6 +48,21 @@ function preload() {
   }
 }
 
+function isIPad() {
+  const userAgent = navigator.userAgent || navigator.vendor || window.opera;
+
+  // Check for iPadOS 13+ where userAgent contains 'Macintosh'
+  if (
+    /Macintosh/i.test(userAgent) &&
+    typeof navigator.standalone !== "undefined"
+  ) {
+    return true;
+  }
+
+  // Check for older iPad user agents
+  return /iPad|iPadOS/i.test(userAgent);
+}
+
 function touchStarted() {
   // 첫 번째 터치: 풀스크린 활성화
   let fs = fullscreen();
@@ -79,8 +94,8 @@ function setup() {
     dep = (minCanvasSize/80); // PC, TV 등 큰 모니터 : 프레임을 크게 설정
     innerDep = dep * 3; // 안쪽 프레임 크기를 바깥쪽 프레임의 2배로 설정
   } else if (aspectRatio = 1) { // LED 캔버스(1) 
-    dep = (minCanvasSize/160); // 정방형 LED 캔버스
-    innerDep = dep * 5; // 안쪽 프레임 크기를 바깥쪽 프레임의 2배로 설정
+    dep = (minCanvasSize/120); // 정방형 LED 캔버스
+    innerDep = dep * 3; // 안쪽 프레임 크기를 바깥쪽 프레임의 2배로 설정
   } else if (aspectRatio < 0.6) { // 스마트폰(0.56) 
     dep = (minCanvasSize/20); // 모바일, 태블릿 등 작은 모니터 : 프레임을 작게 설정
     innerDep = dep * 2; // 안쪽 프레임 크기를 바깥쪽 프레임의 2배로 설정
@@ -88,6 +103,12 @@ function setup() {
     dep = (minCanvasSize/20); // 모바일, 태블릿 등 작은 모니터 : 프레임을 작게 설정
     innerDep = dep * 2; // 안쪽 프레임 크기를 바깥쪽 프레임의 2배로 설정
   }
+
+   if (isIPad()) {
+    console.log("This device is an iPad!");
+    dep = 0; // PC, TV 등 큰 모니터 : 프레임을 크게 설정
+    innerDep = dep * 3; // 안쪽 프레임 크기를 바깥쪽 프레임의 2배로 설정
+  } 
   //console.log("dep: ", dep, "innerDep: ", innerDep);
   //console.log("minCanvasSize: ", minCanvasSize);
 
