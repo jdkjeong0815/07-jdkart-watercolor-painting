@@ -15,6 +15,8 @@
 //   - 2) 프로그램 특징 : 레이어 사용(createGraphics), 애니메이션과 배경을 다른 레이어로 분리하여 처리. 반응형 UI, 액자 모드 기능
 // 주기적인 리로드 : 매  ??초
 // Last Update : 
+// 2025-Jan-21
+//  - 1) 각도 그라디언트 로직 추가 : 0, 1, 2, 3, 4 다섯 가지 방향으로 그라디언트 적용
 // 2025-Jan-18 요약
 //  - 1) full scrren touch event 추가 : 모바일, 태블릿 웹브라우저 실행시 자동 전체 화면 실행이 보안상 안되므로 터치 동작을 추가. 
 //       - 한번 터치하면 full screen으로 전환. 2초 후에 리로드 기능 수행(전체 화면 채우기 위해). - setTimeout() 함수 사용
@@ -33,6 +35,7 @@ let scaleFactor = 1; // 나무 이미지를 줄일 비율
 let snowflakes = []; // 눈송이 배열
 let dep; // 테두리 두께 30px
 let innerDep; // 안쪽 프레임 두께 설정  80px
+let aspectRatio; // 화면비 계산
 
 let mainLayer, snowLayer;
 let randomElements = {};
@@ -67,23 +70,45 @@ function setup() {
   frameRate(60); // 프레임 레이트 설정
   noScroll(); // 스크롤 금지. 스크롤바 생기는 것 방지
 
-  //console.log("minCanvasSize: ", minCanvasSize);
-  // 바깥쪽 프레임 크기를 width, height 중 작은 것 기준으로 1/20, 1/30로 설정
-  if (minCanvasSize > 1200) {
-    dep = (minCanvasSize/30); // PC, TV 등 큰 모니터 : 프레임을 크게 설정
+  // 화면비 계산
+  // 1) LED 캔버스(1) / 2) 모니터,TV 가로 16:9(1.7) / 3) 정방형 아트 LCD(1866/2160(0.86)) /
+  // 4) 모니터, TV 세로(0.56) / 5) 태블릿(0.75) / 6) 스마트폰(0.56)
+  aspectRatio = width / height;
+  //console.log("aspectRatio: ", aspectRatio);
+  if (aspectRatio > 1.6) { // LED 캔버스(1) / 모니터,TV 가로 16:9(1.7)
+    dep = (minCanvasSize/80); // PC, TV 등 큰 모니터 : 프레임을 크게 설정
+    innerDep = dep * 3; // 안쪽 프레임 크기를 바깥쪽 프레임의 2배로 설정
+  } else if (aspectRatio = 1) { // LED 캔버스(1) 
+    dep = (minCanvasSize/160); // 정방형 LED 캔버스
+    innerDep = dep * 5; // 안쪽 프레임 크기를 바깥쪽 프레임의 2배로 설정
+  } else if (aspectRatio < 0.6) { // 스마트폰(0.56) 
+    dep = (minCanvasSize/20); // 모바일, 태블릿 등 작은 모니터 : 프레임을 작게 설정
     innerDep = dep * 2; // 안쪽 프레임 크기를 바깥쪽 프레임의 2배로 설정
-  } else {
+  } else { // 태블릿(0.75) / 모니터, TV 세로(0.56)
     dep = (minCanvasSize/20); // 모바일, 태블릿 등 작은 모니터 : 프레임을 작게 설정
     innerDep = dep * 2; // 안쪽 프레임 크기를 바깥쪽 프레임의 2배로 설정
   }
-
-  // 정방형 LED 캔버스 : 프레임 두께는 최대한 작게!
-  if (width == height) {
-    dep = (minCanvasSize/180); // 정방형 LED 캔버스
-    //dep = 0;
-    innerDep = dep * 2; // 안쪽 프레임 크기를 바깥쪽 프레임의 2배로 설정
-  }
   //console.log("dep: ", dep, "innerDep: ", innerDep);
+  //console.log("minCanvasSize: ", minCanvasSize);
+
+  // ===================================================
+  // 바깥쪽 프레임 크기를 width, height 중 작은 것 기준으로 1/20, 1/30로 설정
+  // if (minCanvasSize > 1200) {
+  //   dep = (minCanvasSize/30); // PC, TV 등 큰 모니터 : 프레임을 크게 설정
+  //   innerDep = dep * 2; // 안쪽 프레임 크기를 바깥쪽 프레임의 2배로 설정
+  // } else {
+  //   dep = (minCanvasSize/20); // 모바일, 태블릿 등 작은 모니터 : 프레임을 작게 설정
+  //   innerDep = dep * 2; // 안쪽 프레임 크기를 바깥쪽 프레임의 2배로 설정
+  // }
+
+  // // 정방형 LED 캔버스 : 프레임 두께는 최대한 작게!
+  // if (width == height) {
+  //   dep = (minCanvasSize/180); // 정방형 LED 캔버스
+  //   //dep = 0;
+  //   innerDep = dep * 2; // 안쪽 프레임 크기를 바깥쪽 프레임의 2배로 설정
+  // }
+  //console.log("dep: ", dep, "innerDep: ", innerDep);
+  // ===================================================
 
   // 랜덤 요소 초기화
   clear();
