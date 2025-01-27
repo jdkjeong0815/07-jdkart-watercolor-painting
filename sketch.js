@@ -96,7 +96,7 @@ function setup() {
   } else if (aspectRatio = 1) { // LED 캔버스(1) 
     dep = (minCanvasSize/100); // 정방형 LED 캔버스
     innerDep = dep * 2.5; // 안쪽 프레임 크기를 바깥쪽 프레임의 2배로 설정
-  } else if (aspectRatio < 0.6) { // 스마트폰(0.56) 
+  } else if (aspectRatio < 1) { // 스마트폰(0.56) 
     dep = (minCanvasSize/20); // 모바일, 태블릿 등 작은 모니터 : 프레임을 작게 설정
     innerDep = dep * 2; // 안쪽 프레임 크기를 바깥쪽 프레임의 2배로 설정
   } else { // 태블릿(0.75) / 모니터, TV 세로(0.56)
@@ -104,14 +104,14 @@ function setup() {
     innerDep = dep * 2; // 안쪽 프레임 크기를 바깥쪽 프레임의 2배로 설정
   }
 
-  if (aspectRatio >= 0.86 && aspectRatio <= 0.87) { // LCD 캔버스(1866:2160=0.8638)
-    dep = (minCanvasSize/20); 
-    innerDep = dep * 2; // 안쪽 프레임 크기를 바깥쪽 프레임의 x배로 설정
-  }
-  if (width == 1866) { // LCD 캔버스(1866:2160=0.8638)
-    dep = (minCanvasSize/20);
-    innerDep = dep * 2; // 안쪽 프레임 크기를 바깥쪽 프레임의 x배로 설정
-  }
+  // if (aspectRatio >= 0.86 && aspectRatio <= 0.87) { // LCD 캔버스(1866:2160=0.8638)
+  //   dep = (minCanvasSize/20); 
+  //   innerDep = dep * 2; // 안쪽 프레임 크기를 바깥쪽 프레임의 x배로 설정
+  // }
+  // if (width == 1866) { // LCD 캔버스(1866:2160=0.8638)
+  //   dep = (minCanvasSize/20);
+  //   innerDep = dep * 2; // 안쪽 프레임 크기를 바깥쪽 프레임의 x배로 설정
+  // }
 
 
    if (isIPad()) {
