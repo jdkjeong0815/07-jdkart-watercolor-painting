@@ -108,6 +108,10 @@ function setup() {
     dep = (minCanvasSize/60); 
     innerDep = dep * 3; // 안쪽 프레임 크기를 바깥쪽 프레임의 x배로 설정
   }
+  if (width == 1866) { // LCD 캔버스(1866:2160=0.8638)
+    dep = (minCanvasSize/60); 
+    innerDep = dep * 3; // 안쪽 프레임 크기를 바깥쪽 프레임의 x배로 설정
+  }
 
 
    if (isIPad()) {
