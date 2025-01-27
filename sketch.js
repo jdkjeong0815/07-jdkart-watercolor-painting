@@ -104,6 +104,12 @@ function setup() {
     innerDep = dep * 2; // 안쪽 프레임 크기를 바깥쪽 프레임의 2배로 설정
   }
 
+  if (aspectRatio >= 0.86 && aspectRatio <= 0.87) { // LCD 캔버스(1866:2160=0.8638)
+    dep = (minCanvasSize/80); 
+    innerDep = dep * 3; // 안쪽 프레임 크기를 바깥쪽 프레임의 x배로 설정
+  }
+
+
    if (isIPad()) {
     console.log("This device is an iPad!");
     dep = 0; // PC, TV 등 큰 모니터 : 프레임을 크게 설정
