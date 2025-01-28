@@ -261,8 +261,22 @@ function drawGradientMoon() {
 function drawGradientBackground() {
   // let direction = random([0, 1, 2, 3, 4]); // 0: top-bottom, 1: bottom-top, 2: left-right, 3: right-left, 4: random angle
   let direction = random([0, 1]); // 0: top-bottom, 1: bottom-top, // 2: left-right, 3: right-left, 4: random angle = 아름답지 않아서 제외
-  let c1 = color(random(255), random(255), random(255));
-  let c2 = color(random(255), random(255), random(255));
+  let c1, c2;
+
+  if (random(1) < 0.8) {
+    // 80% 확률로 랜덤 컬러
+    c1 = color(random(255), random(255), random(255));
+    c2 = color(random(255), random(255), random(255));
+  } else {
+    // 20% 확률로 black-white
+    if (random(1) < 0.5) {
+      c1 = color(random(0, 20));
+      c2 = color(random(220, 255));
+    } else {
+      c1 = color(random(220, 255));
+      c2 = color(random(0, 20));
+    }
+  }
 
   let xStart = dep + innerDep;
   let yStart = dep + innerDep;
