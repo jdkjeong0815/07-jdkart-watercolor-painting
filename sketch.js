@@ -155,8 +155,8 @@ function setup() {
   drawGradientTree();
   drawFrame();
   
-  // 120초마다 자동 갱신
-  setInterval(refreshSketch, 120000);  // 애니메이션 효과를 위해 120초로 변경
+  // 240초마다 자동 갱신
+  setInterval(refreshSketch, 240000);
 }
 
 function draw() {
